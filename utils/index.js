@@ -1,21 +1,27 @@
-const { AES, enc } = require('crypto-js')
-const key = 'PIKAQIU'
-/**
- * 加密
- * @author cieme
- * @date 2022-10-31
- * @param {string} str
- * @returns {encrypted}
- */
-export const encrypt = (str) => AES.encrypt(str, key).toString()
-/**
- * 解密
- * @author cieme
- * @date 2022-10-31
- * @param {encrypted} encrypted
- * @returns {string}
- */
-export const decrypt = (encrypted) => {
-  const decry = AES.decrypt(encrypted, key)
-  return decry.toString(enc.Utf8)
+import { Base64 } from 'js-base64'
+
+// 加盐
+let salting = 'admin-authority'
+
+// 加密
+const encryptString = (name) => {
+  return Base64.encode(name + salting)
 }
+
+// 解密
+const decodeString = (name) => {
+  let decodeName = Base64.decode(name) || ''
+
+  if (
+    decodeName &&
+    decodeName.split &&
+    decodeName.split(salting) &&
+    decodeName.split(salting)[0]
+  ) {
+    return decodeName.split(salting)[0]
+  } else {
+    return ''
+  }
+}
+
+export { encryptString, decodeString }

@@ -29,8 +29,11 @@
     "@babel/runtime": "^7.20.1",
     "@babel/runtime-corejs3": "^7.20.1",
     "autoprefixer": "^10.4.13",
-    "crypto-js": "^4.1.1",
+    "core-js": "^3.26.0",
+    "file-loader": "^6.2.0",
+    "js-base64": "^3.7.2",
     "sass-loader": "^13.1.0",
+    "url-loader": "^4.1.1",
     "webpack-dev-server": "^4.11.1"
   }
 }

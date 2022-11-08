@@ -53,11 +53,33 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
         // More information here https://webpack.js.org/guides/asset-modules/
-        type: 'asset',
+        // type: 'asset',
+        // use: [
+        //   {
+        //     // loader: 'url-loader',
+        //     // options: {
+        //     //   limit: 8192,
+        //     //   esModule: false,
+        //     //   publicPath: './image',
+        //     // },
+        //     loader: 'file-loader',
+        //     options: {
+        //       publicPath: 'image',
+        //       outputPath: 'image',
+        //     },
+        //   },
+        // ],
+        type: 'asset/resource',
       },
       {
         test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        // exclude: /(node_modules|bower_components)/,
+        include: [
+          path.resolve(__dirname, 'node_modules/js-base64'),
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'utils'),
+          path.resolve(__dirname, 'main.js'),
+        ],
         use: {
           loader: 'babel-loader',
         },

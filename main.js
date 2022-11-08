@@ -1,15 +1,5 @@
 import '@/styles/index.scss'
-import { encrypt, decrypt } from './utils/index'
-const str = encrypt('皮卡丘')
+import { encryptString, decodeString } from './utils/index'
+const str = encryptString('12345678900987654321')
 console.log(str)
-console.log(decrypt(str))
-const a = 1
-const b = Math.random()
-console.log(a + b)
-class XX {
-  constructor() {
-    this.tt = 1
-  }
-}
-const yy = new XX()
-console.log(yy?.xx)
+console.log(decodeString(str))
