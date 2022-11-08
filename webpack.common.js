@@ -122,6 +122,8 @@ module.exports = {
       filename: 'index.html',
       publicPath: 'auto',
       minify: false,
+      inject: 'body',
+      scriptLoading: 'blocking',
     }),
   ],
 }
