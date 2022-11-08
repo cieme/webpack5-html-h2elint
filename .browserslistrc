@@ -1,7 +1,7 @@
 # Browsers that we support
 
-last 30 version
-not ie <= 9
+last 20 version
+ie 9
 > 0.01%
 Firefox ESR
 maintained node versions

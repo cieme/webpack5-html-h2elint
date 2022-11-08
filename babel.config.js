@@ -10,10 +10,20 @@ module.exports = {
         //   chrome: '58',
         //   ie: '10',
         // },
+        targets: {
+          ie: 9,
+          chrome: 50,
+          firefox: 50,
+        },
       },
     ],
   ],
   plugins: [
+    [
+      '@babel/plugin-transform-modules-umd',
+      { strict: false, allowTopLevelThis: true, importInterop: 'babel' },
+    ],
+    ['@babel/plugin-transform-modules-commonjs'],
     [
       '@babel/plugin-transform-runtime',
       {
