@@ -1,4 +1,4 @@
 class XX {
   constructor(){}
 }
-console.log(xx)
+console.log(XX)

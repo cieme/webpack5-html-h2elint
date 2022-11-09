@@ -1,8 +1,9 @@
 const path = require('path')
+const { getHtmlList } = require('./html-file')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const NodePolyfillWebpackPlugin = require('node-polyfill-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
+const htmlList = getHtmlList()
 module.exports = {
   entry: './main.js',
   // devtool:"source-map",
@@ -65,7 +66,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(htm|html|ejs)$/i,
+        test: /\.(htm|html|ejs|hbs)$/i,
         use: {
           loader: 'html-loader',
           options: {
@@ -121,14 +122,16 @@ module.exports = {
       filename: 'css/[name].css', //抽离css之后输出的文件名
       chunkFilename: '[id].css',
     }),
-    new HtmlWebpackPlugin({
-      title:"首页",
-      template: './src/views/index.ejs',
-      filename: 'index.html',
-      publicPath: 'auto',
-      minify: false,
-      inject: 'body',
-      scriptLoading: 'blocking',
+    ...htmlList.map((item) => {
+      return new HtmlWebpackPlugin({
+        title: '首页',
+        template: `./src/views/${item}`,
+        filename: item,
+        publicPath: 'auto',
+        minify: false,
+        inject: 'head',
+        scriptLoading: 'blocking',
+      })
     }),
   ],
 }
