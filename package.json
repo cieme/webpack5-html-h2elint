@@ -39,12 +39,14 @@
     "element-ui": "^2.15.10",
     "file-loader": "^6.2.0",
     "https-browserify": "^1.0.0",
+    "jquery": "^3.6.1",
     "js-base64": "^3.7.2",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "postcss-plugin-px2rem": "^0.8.1",
     "sass-loader": "^13.1.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
+    "swiper": "^8.4.4",
     "url-loader": "^4.1.1",
     "webpack-dev-server": "^4.11.1"
   }

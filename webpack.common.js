@@ -3,6 +3,7 @@ const { getHtmlList } = require('./html-file')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const NodePolyfillWebpackPlugin = require('node-polyfill-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const webpack = require('webpack')
 const htmlList = getHtmlList()
 module.exports = {
   entry: './main.js',
@@ -45,14 +46,29 @@ module.exports = {
           maxInitialRequests: 5, // The default limit is too small to showcase the effect
           minSize: 0, // This is example is too small to create commons chunks
         },
+        jq: {
+          //产生一个Chunk
+          test: /node_modules[\\/](jquery)/,
+          chunks: 'all',
+          name: 'jq',
+          priority: 10,
+        },
         vendor: {
           //产生一个Chunk
           test: /node_modules/,
           chunks: 'initial',
-          name: 'vendor',
+          name(module, chunks, cacheGroupKey) {
+            const moduleFileName = module
+              .identifier()
+              .split('/')
+              .reduceRight((item) => item)
+            const allChunksNames = chunks.map((item) => item.name).join('~')
+            return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`
+          },
           priority: 10,
           enforce: true,
         },
+
         // commons: {
         //   name: 'chunk-commons',
         //   test: path.resolve(__dirname, 'src/components'), // can customize your rules
@@ -121,6 +137,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/[name].css', //抽离css之后输出的文件名
       chunkFilename: '[id].css',
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
     }),
     ...htmlList.map((item) => {
       return new HtmlWebpackPlugin({
