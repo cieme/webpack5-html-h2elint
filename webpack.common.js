@@ -32,6 +32,10 @@ module.exports = {
     runtimeChunk: 'single', //会将Webpack在浏览器端运行时需要的代码单独抽离到一个文件
     splitChunks: {
       chunks: 'all',
+      automaticNameDelimiter: '.', // 分割出来的加分隔符
+      name: '[name]',
+      // minSize: 10000,
+      // maxSize: 244000,
       cacheGroups: {
         commons: {
           //产生一个Chunk
@@ -61,7 +65,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(htm|html)$/i,
+        test: /\.(htm|html|ejs)$/i,
         use: {
           loader: 'html-loader',
           options: {
@@ -118,7 +122,8 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
     new HtmlWebpackPlugin({
-      template: './src/views/index.html',
+      title:"首页",
+      template: './src/views/index.ejs',
       filename: 'index.html',
       publicPath: 'auto',
       minify: false,
