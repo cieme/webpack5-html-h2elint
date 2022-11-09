@@ -1,4 +1,5 @@
-const px2rem = require('postcss-plugin-px2rem')
+const px2rem = require('postcss-plugin-px2rem');
+
 module.exports = {
   plugins: [
     [
@@ -22,4 +23,4 @@ module.exports = {
       }),
     ],
   ],
-}
+};

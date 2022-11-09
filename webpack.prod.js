@@ -1,14 +1,14 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common");
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common');
+
 module.exports = () => {
   return merge(common, {
-    mode: "production",
+    mode: 'production',
     output: {
       clean: true,
-      publicPath: "./",
+      publicPath: './',
     },
     module: {
       rules: [
@@ -19,12 +19,12 @@ module.exports = () => {
               loader: MiniCssExtractPlugin.loader,
               options: {
                 esModule: false,
-                publicPath: "../",
+                publicPath: '../',
               },
             },
-            { loader: "css-loader", options: { sourceMap: true } },
-            { loader: "postcss-loader", options: { sourceMap: true } },
-            { loader: "sass-loader", options: { sourceMap: true } },
+            { loader: 'css-loader', options: { sourceMap: true } },
+            { loader: 'postcss-loader', options: { sourceMap: true } },
+            { loader: 'sass-loader', options: { sourceMap: true } },
           ],
         },
       ],

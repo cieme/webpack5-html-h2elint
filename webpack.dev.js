@@ -1,8 +1,8 @@
-const path = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const path = require('path');
 
-const { merge } = require('webpack-merge')
-const common = require('./webpack.common')
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common');
+
 module.exports = () => {
   return merge(common, {
     mode: 'development',
@@ -21,7 +21,7 @@ module.exports = () => {
       port: 9000,
       hot: true,
       historyApiFallback: true,
-      open:true
+      open: true,
     },
     module: {
       rules: [
@@ -38,5 +38,5 @@ module.exports = () => {
         },
       ],
     },
-  })
-}
+  });
+};

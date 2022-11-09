@@ -1,12 +1,13 @@
-const path = require('path')
-const { getHtmlList } = require('./html-file')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const { getHtmlList } = require('./html-file');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const NodePolyfillWebpackPlugin = require('node-polyfill-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const webpack = require('webpack')
-const htmlList = getHtmlList()
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
+
+const htmlList = getHtmlList();
 module.exports = {
-  entry: './main.js',
+  entry: './src/main.js',
   // devtool:"source-map",
   target: ['web', 'es5'],
   output: {
@@ -31,7 +32,7 @@ module.exports = {
     },
   },
   optimization: {
-    runtimeChunk: 'single', //会将Webpack在浏览器端运行时需要的代码单独抽离到一个文件
+    runtimeChunk: 'single', // 会将Webpack在浏览器端运行时需要的代码单独抽离到一个文件
     splitChunks: {
       chunks: 'all',
       automaticNameDelimiter: '.', // 分割出来的加分隔符
@@ -40,30 +41,30 @@ module.exports = {
       // maxSize: 244000,
       cacheGroups: {
         commons: {
-          //产生一个Chunk
+          // 产生一个Chunk
           chunks: 'initial',
           minChunks: 2,
           maxInitialRequests: 5, // The default limit is too small to showcase the effect
           minSize: 0, // This is example is too small to create commons chunks
         },
         jq: {
-          //产生一个Chunk
+          // 产生一个Chunk
           test: /node_modules[\\/](jquery)/,
           chunks: 'all',
           name: 'jq',
           priority: 10,
         },
         vendor: {
-          //产生一个Chunk
+          // 产生一个Chunk
           test: /node_modules/,
           chunks: 'initial',
           name(module, chunks, cacheGroupKey) {
             const moduleFileName = module
               .identifier()
               .split('/')
-              .reduceRight((item) => item)
-            const allChunksNames = chunks.map((item) => item.name).join('~')
-            return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`
+              .reduceRight((item) => item);
+            const allChunksNames = chunks.map((item) => item.name).join('~');
+            return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
           },
           priority: 10,
           enforce: true,
@@ -135,7 +136,7 @@ module.exports = {
   plugins: [
     // new NodePolyfillWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css', //抽离css之后输出的文件名
+      filename: 'css/[name].css', // 抽离css之后输出的文件名
       chunkFilename: '[id].css',
     }),
     new webpack.ProvidePlugin({
@@ -150,7 +151,7 @@ module.exports = {
         minify: false,
         inject: 'head',
         scriptLoading: 'blocking',
-      })
+      });
     }),
   ],
-}
+};
