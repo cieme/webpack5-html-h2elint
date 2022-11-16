@@ -21,6 +21,7 @@ module.exports = {
     // },
   },
   resolve: {
+    extensions: ['.ts', '.js', '.json', '.wasm', '.scss', '.less', '.css'],
     alias: {
       '@': path.resolve(__dirname, 'src/'),
     },
@@ -83,15 +84,31 @@ module.exports = {
   },
   module: {
     rules: [
+      // {
+      //   test: /\.html$/,
+      //   type: 'asset/resource',
+      //   generator: {
+      //     filename: '[name][ext]',
+      //   },
+      // },
+      // {
+      //   test: /\.html$/i,
+      //   use: ['html-loader'],
+      // },
       {
-        test: /\.(htm|html|ejs|hbs)$/i,
-        use: {
-          loader: 'html-loader',
-          options: {
-            sources: true,
-            minimize: false,
+        test: /\.(htm|html|.hbs|ejs)$/i,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              esModule: false,
+              sources: true,
+              // minimize: false,
+            },
           },
-        },
+          // { loader: 'markup-inline-loader' },
+        ],
+        // type: 'asset/resource',
       },
       {
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
@@ -145,13 +162,30 @@ module.exports = {
     }),
     ...htmlList.map((item) => {
       return new HtmlWebpackPlugin({
+        meta: {
+          charset: 'UTF-8',
+          'X-UA-Compatible': {
+            'http-equiv': 'X-UA-Compatible',
+            content: 'IE=edge',
+          },
+          viewport:
+            'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover',
+          'format-detection': 'telephone=no,email=no',
+          'apple-mobile-web-app-capable': 'yes',
+          'apple-mobile-web-app-status-bar-style': 'black-translucent',
+          'apple-mobile-web-app-title': 'webApp',
+          'apple-touch-fullscreen': 'yes',
+          browsermode: 'application',
+        },
         title: '首页',
-        template: `./src/views/${item}`,
-        filename: item,
+        template: item.fileFullPath,
+        // template: `./src/views/${item}`,
+        filename: item.fileNamePath,
         publicPath: 'auto',
-        minify: false,
-        inject: 'head',
-        scriptLoading: 'blocking',
+        minify: true,
+        inject: true, // true false head body
+        scriptLoading: 'defer', // blocking module
+        xhtml: false,
       });
     }),
   ],

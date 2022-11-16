@@ -1,4 +1,4 @@
-import '@/styles/index.scss';
+import '@/assets/styles';
 import { initSwiper } from '@/utils/swiper';
 
 $(() => {

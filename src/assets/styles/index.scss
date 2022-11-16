@@ -5,6 +5,8 @@
 
 html {
   font-size: calc(100vw / 7.5);
+  /* 只允许进行滚动和持续缩放，双击不能触发，这个设置可以完美解决 300ms 延时 */
+  // touch-action: manipulation;
 }
 
 body {

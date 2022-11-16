@@ -45,6 +45,7 @@
     "https-browserify": "^1.0.0",
     "jquery": "^3.6.1",
     "js-base64": "^3.7.2",
+    "markup-inline-loader": "^4.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "postcss-plugin-px2rem": "^0.8.1",
     "sass-loader": "^13.1.0",
