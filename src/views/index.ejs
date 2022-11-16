@@ -5,13 +5,17 @@
   </head>
 
   <body>
+    @require('../components/header.ejs',{"index":0})
     <section class="swiper swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img src="<%= require( '../images/b.jpg') %>" alt="" />
+          <img src="<%= require('../images/b.jpg') %> " alt="" />
         </div>
         <div class="swiper-slide">
-          <img src="<%= require( '../images/b.jpg') %>" alt="" />
+          <img src="<%= require( '../assets/svg/gelou.svg') %>" alt="" />
+        </div>
+        <div class="swiper-slide">
+          <video controls src="<%= require( '../assets/video/ScreenFlow.mp4') %>"></video>
         </div>
       </div>
     </section>

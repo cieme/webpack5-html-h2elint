@@ -14,7 +14,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/[name].bundle.js',
     chunkFilename: '[name].js',
-    assetModuleFilename: 'image/[contenthash][ext]',
+    // assetModuleFilename: '[path][contenthash][ext]', //  generator 优先级更高
+    // assetModuleFilename: 'image/[contenthash][ext]',
     // environment: {
     //   // 是否使用箭头函数
     //   arrowFunction: false,
@@ -107,30 +108,58 @@ module.exports = {
       //       },
       //     },
       //     { loader: 'markup-inline-loader' },
-      //     { loader: 'include-template-loader' },
       //   ],
       //   // type: 'asset/resource',
       // },
       {
-        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-        // More information here https://webpack.js.org/guides/asset-modules/
-        // type: 'asset',
-        // use: [
-        //   {
-        //     // loader: 'url-loader',
-        //     // options: {
-        //     //   limit: 8192,
-        //     //   esModule: false,
-        //     //   publicPath: './image',
-        //     // },
-        //     loader: 'file-loader',
-        //     options: {
-        //       publicPath: 'image',
-        //       outputPath: 'image',
-        //     },
-        //   },
-        // ],
+        test: /.ejs/i,
+        use: [
+          {
+            loader: 'underscore-template-loader',
+          },
+          // {
+          //   loader: 'ejs-loader',
+          //   options: {
+          //     esModule: false,
+          //     // variable: 'data',
+          //     // interpolate: '\\{\\{(.+?)\\}\\}',
+          //     // evaluate: '\\[\\[(.+?)\\]\\]',
+          //   },
+          // },
+          // { loader: 'markup-inline-loader?strict=[markup-inline]' },
+        ],
+      },
+      // {
+      //   test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2|mp4)$/i,
+      //   type: 'asset/resource',
+      // },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'images/[contenthash][ext]',
+        },
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[contenthash][ext]',
+        },
+      },
+      {
+        test: /\.(svg)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/svg/[contenthash][ext]',
+        },
+      },
+      {
+        test: /\.(mp4)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/video/[contenthash][ext]',
+        },
       },
       {
         test: /\.m?js$/,
