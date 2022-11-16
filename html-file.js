@@ -7,8 +7,11 @@ function getHtmlList() {
   const list = [];
 
   deepDir(filePath, list);
+
   list.forEach((item) => {
-    item.fileNamePath = pathOfInterception(item.fileFullPath, filePath);
+    const listItem = item;
+    listItem.fileNamePath = pathOfInterception(item.fileFullPath, filePath);
+    listItem.onlyName = getOnlyName(item.fileName);
   });
 
   return list;
@@ -58,6 +61,18 @@ function deepDir(dirStr, listArr) {
 function pathOfInterception(originStr, filePath) {
   const str = originStr.replace(`${filePath}/`, ``);
   return str;
+}
+/* 截取文件名字 */
+function getOnlyName(filename) {
+  // filename.search('.') !== -1;  他居然一直是0   search 参数是 regexp, 非regexp 会new RegExp隐式转化为正则表达式
+  // const reg =/[.]/g
+  // filename.search(reg)
+  if (filename.includes('.')) {
+    const arr = filename.split('.');
+    arr.pop();
+    return arr.join('.');
+  }
+  return filename;
 }
 
 module.exports = {

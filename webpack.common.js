@@ -95,21 +95,22 @@ module.exports = {
       //   test: /\.html$/i,
       //   use: ['html-loader'],
       // },
-      {
-        test: /\.(htm|html|.hbs|ejs)$/i,
-        use: [
-          {
-            loader: 'html-loader',
-            options: {
-              esModule: false,
-              sources: true,
-              // minimize: false,
-            },
-          },
-          // { loader: 'markup-inline-loader' },
-        ],
-        // type: 'asset/resource',
-      },
+      // {
+      //   test: /\.(htm|html|.hbs|ejs)$/i,
+      //   use: [
+      //     {
+      //       loader: 'html-loader',
+      //       options: {
+      //         esModule: false,
+      //         sources: true,
+      //         // minimize: false,
+      //       },
+      //     },
+      //     { loader: 'markup-inline-loader' },
+      //     { loader: 'include-template-loader' },
+      //   ],
+      //   // type: 'asset/resource',
+      // },
       {
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
         // More information here https://webpack.js.org/guides/asset-modules/
@@ -180,7 +181,7 @@ module.exports = {
         title: '首页',
         template: item.fileFullPath,
         // template: `./src/views/${item}`,
-        filename: item.fileNamePath,
+        filename: `${item.onlyName}.html`,
         publicPath: 'auto',
         minify: true,
         inject: true, // true false head body
