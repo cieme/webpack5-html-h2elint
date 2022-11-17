@@ -1,7 +1,8 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
+const webpack = require('webpack');
 
 module.exports = () => {
   return merge(common, {
@@ -9,6 +10,10 @@ module.exports = () => {
     output: {
       clean: true,
       publicPath: './',
+    },
+    performance: {
+      // 性能设置,文件打包过大时，会报警告
+      hints: 'warning',
     },
     module: {
       rules: [
@@ -29,5 +34,9 @@ module.exports = () => {
         },
       ],
     },
+    plugins: [
+      new BundleAnalyzerPlugin(),
+      new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+    ],
   });
 };

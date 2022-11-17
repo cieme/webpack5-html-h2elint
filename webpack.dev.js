@@ -2,6 +2,7 @@ const path = require('path');
 
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
+const webpack = require('webpack');
 
 module.exports = () => {
   return merge(common, {
@@ -38,5 +39,6 @@ module.exports = () => {
         },
       ],
     },
+    plugins: [new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development') })],
   });
 };

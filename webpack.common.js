@@ -34,17 +34,20 @@ module.exports = {
     },
   },
   optimization: {
+    minimize: true,
     runtimeChunk: 'single', // 会将Webpack在浏览器端运行时需要的代码单独抽离到一个文件
     splitChunks: {
-      chunks: 'all',
-      automaticNameDelimiter: '.', // 分割出来的加分隔符
-      name: '[name]',
-      // minSize: 10000,
-      // maxSize: 244000,
+      chunks: 'all', // 选择那些代码进行优化
+      automaticNameDelimiter: '~', // 分割出来的加分隔符
+      name: false,
+      // minChunks: 2, // 最少被引用两次 才提取
+      // minSize: 30 * 1024,
+      // maxSize: 0, // 没有最大限制
       cacheGroups: {
         commons: {
           // 产生一个Chunk
           chunks: 'initial',
+          name: 'commons',
           minChunks: 2,
           maxInitialRequests: 5, // The default limit is too small to showcase the effect
           minSize: 0, // This is example is too small to create commons chunks
@@ -58,8 +61,8 @@ module.exports = {
         },
         vendor: {
           // 产生一个Chunk
-          test: /node_modules/,
-          chunks: 'initial',
+          test: /[\\/]node_modules[\\/]/, // 路径分隔符是因为 跨平台 unix / windows \
+          chunks: 'all',
           name: 'vendor',
           // name(module, chunks, cacheGroupKey) {
           //   const moduleFileName = module
@@ -83,6 +86,7 @@ module.exports = {
       },
     },
   },
+
   module: {
     rules: [
       // {
@@ -134,8 +138,13 @@ module.exports = {
       //   type: 'asset/resource',
       // },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|webp)$/i,
         type: 'asset/resource',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 10kb 以下图片 base64 处理
+          },
+        },
         generator: {
           filename: 'images/[contenthash][ext]',
         },
@@ -149,10 +158,10 @@ module.exports = {
       },
       {
         test: /\.(svg)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/svg/[contenthash][ext]',
-        },
+        type: 'asset/inline',
+        // generator: {
+        //   filename: 'assets/svg/[contenthash][ext]',
+        // },
       },
       {
         test: /\.(mp4)$/i,
@@ -175,9 +184,14 @@ module.exports = {
           path.resolve(__dirname, 'utils'),
           path.resolve(__dirname, 'main.js'),
         ],
-        use: {
-          loader: 'babel-loader',
-        },
+        use: [
+          {
+            loader: 'thread-loader', // 数量默认 cpu 数-1
+          },
+          {
+            loader: 'babel-loader',
+          },
+        ],
       },
     ],
   },
